@@ -48,4 +48,4 @@ jobs:
         uses: actions/attest-build-provenance@v1
         id: attest
         with:
-          subject-name: 'dist/*'
+          subject-path: 'dist/*'
