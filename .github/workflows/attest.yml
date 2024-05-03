@@ -16,6 +16,9 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Build
+        run: |
+          go build -o dist/test-github-provenance main.go
       - id: gh-release
         name: Publish GitHub release draft
         uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
@@ -30,13 +33,17 @@ jobs:
               body: 'Release',
             });
 
+            fs.readdirSync('dist/').forEach(file => {
+              github.rest.repos.uploadReleaseAsset({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                release_id: res.data.id,
+                name: file,
+                data: fs.readFileSync('dist/' + file),
+              });
+            });
+
             return res.data.id
-      - name: Build and release Go
-        uses: wangyoucao577/go-release-action@v1
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          goos: linux
-          goarch: amd64
       - name: Attest
         uses: actions/attest-build-provenance@v1
         id: attest
