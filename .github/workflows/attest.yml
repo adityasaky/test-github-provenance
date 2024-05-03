@@ -18,7 +18,7 @@ jobs:
           fetch-depth: 0
       - name: Build
         run: |
-          git checkout HEAD~1
+          git checkout ad797ad077cd880b138983fd44e56e8916cfcf67
           go build -o dist/test-github-provenance main.go
       - id: gh-release
         name: Publish GitHub release draft
