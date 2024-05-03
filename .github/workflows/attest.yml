@@ -37,3 +37,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           goos: linux
           goarch: amd64
+      - name: Attest
+        uses: actions/attest-build-provenance@v1
+        id: attest
+          subject-path: 'test-github-provenance-${{ github.ref_name }}'
