@@ -16,6 +16,21 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - id: gh-release
+        name: Publish GitHub release draft
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        with:
+          script: |
+            fs = require('fs')
+            res = await github.rest.repos.createRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              name: '${{ github.ref_name }}-rc',
+              tag_name: '${{ github.ref }}',
+              body: 'Release waiting for review...',
+            });
+
+            return res.data.id
       - name: Build and release Go
         uses: wangyoucao577/go-release-action@v1
         with:
