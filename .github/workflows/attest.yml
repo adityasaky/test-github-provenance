@@ -40,4 +40,4 @@ jobs:
       - name: Attest
         uses: actions/attest-build-provenance@v1
         id: attest
-          subject-path: 'test-github-provenance-${{ github.ref_name }}'
+          subject-path: test-github-provenance-${{ github.ref_name }}
