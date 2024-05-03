@@ -25,9 +25,9 @@ jobs:
             res = await github.rest.repos.createRelease({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              name: '${{ github.ref_name }}-rc',
+              name: '${{ github.ref_name }}',
               tag_name: '${{ github.ref }}',
-              body: 'Release waiting for review...',
+              body: 'Release',
             });
 
             return res.data.id
